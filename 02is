@@ -2,16 +2,23 @@ import scapy.all as scapy
 
 # Define the new source IP address
 new_source_ip = "192.168.1.20"
+source_port = 12345
 
 # Define the target IP address and port
 target_ip = "192.168.1.10"
 target_port = 80
 
-# Create a TCP packet with the specified destination IP and port
-tcp_packet = scapy.TCP(dport=target_port, flags="S")
+# Specify the payload content
+payload_data = "Hello, this is the payload data!"
 
-# Create an IP packet with the specified destination IP, source IP, and TCP layer
-ip_packet = scapy.IP(dst=target_ip, src=new_source_ip) / tcp_packet
+# Create a TCP packet with the specified destination IP and port
+tcp_packet = scapy.TCP(sport = source_port, dport=target_port, flags="S")
+
+# Add payload data using the Raw layer
+raw_payload = scapy.Raw(load=payload_data)
+
+# Create an IP packet with the specified destination IP, source IP, TCP layer, and payload
+ip_packet = scapy.IP(dst=target_ip, src=new_source_ip) / tcp_packet / raw_payload
 
 # Send the packet to the target host
 scapy.send(ip_packet)
