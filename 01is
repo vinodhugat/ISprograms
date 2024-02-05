@@ -1,0 +1,15 @@
+#this requeres admin permissions just send a packet
+import scapy.all as scapy
+
+# Define the IP address and port of the target host
+target_ip = "192.168.1.10"
+target_port = 80
+
+# Create a TCP packet with the specified destination IP and port
+tcp_packet = scapy.TCP(dport=target_port, flags="S")
+
+# Create an IP packet with the specified destination IP and TCP layer
+ip_packet = scapy.IP(dst=target_ip) / tcp_packet
+
+# Send the packet to the target host
+scapy.send(ip_packet)
