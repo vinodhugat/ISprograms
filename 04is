@@ -1,0 +1,17 @@
+import socket
+
+# Define the IP address and port
+IP_address = "127.0.0.1"
+port = 9090
+
+# Create a UDP socket
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+# Bind the socket to the IP address and port
+sock.bind((IP_address, port))
+
+# Prepare the data to send
+data = b'Hello, World!'
+
+# Send the data
+sock.sendto(data, (IP_address, port))
